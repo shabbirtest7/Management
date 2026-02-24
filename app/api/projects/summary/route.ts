@@ -2,6 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { requireAuth } from '@/lib/auth';
 
+
+type ProjectsOverTimeItem = {
+  createdAt: Date | null;
+  _count: number;
+};
+
 export async function GET(request: NextRequest) {
   try {
     const user = await requireAuth(request);
@@ -120,12 +126,24 @@ export async function GET(request: NextRequest) {
       }
     });
 
+    
+
     return NextResponse.json({
       timeframe,
-      projectsOverTime: projectsOverTime.map(item => ({
-        date: item.createdAt?.toISOString().split('T')[0],
-        count: item._count
-      })),
+      // projectsOverTime: projectsOverTime.map(item => ({
+      //   date: item.createdAt?.toISOString().split('T')[0],
+      //   count: item._count
+      // })),
+
+      projectsOverTime: (projectsOverTime as ProjectsOverTimeItem[]).map(
+  (item) => ({
+    date: item.createdAt
+      ? item.createdAt.toISOString().split('T')[0]
+      : null,
+    count: item._count,
+  })
+),
+
       statusChanges: statusChanges.map(item => ({
         date: item.createdAt?.toISOString().split('T')[0],
         action: item.action,
