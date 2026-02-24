@@ -8,6 +8,14 @@ type ProjectsOverTimeItem = {
   _count: number;
 };
 
+type StatusChangeItem = {
+  createdAt: Date | null;
+  action: string; // or enum if you have one
+  project: {
+    name: string;
+  } | null;
+};
+
 export async function GET(request: NextRequest) {
   try {
     const user = await requireAuth(request);
@@ -144,11 +152,20 @@ export async function GET(request: NextRequest) {
   })
 ),
 
-      statusChanges: statusChanges.map(item => ({
-        date: item.createdAt?.toISOString().split('T')[0],
-        action: item.action,
-        project: item.project?.name
-      })),
+      // statusChanges: statusChanges.map(item => ({
+      //   date: item.createdAt?.toISOString().split('T')[0],
+      //   action: item.action,
+      //   project: item.project?.name
+      // })),
+
+      statusChanges: (statusChanges as StatusChangeItem[]).map(item => ({
+  date: item.createdAt
+    ? item.createdAt.toISOString().split('T')[0]
+    : null,
+  action: item.action,
+  project: item.project?.name ?? null,
+})),
+
       upcomingDeadlines,
       overdueProjects,
       summary: {
