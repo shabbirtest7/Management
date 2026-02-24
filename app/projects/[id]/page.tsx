@@ -827,7 +827,6 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
         }
         throw new Error('Failed to fetch project');
       }
-
       const data = await res.json();
       setProject(data.project);
     } catch (error) {

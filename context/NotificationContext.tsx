@@ -3,6 +3,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { toast } from 'react-hot-toast';
 import { useAuth } from './AuthContext';
+// import { useAuth } from './AuthContext';
 
 interface Notification {
   id: string;
