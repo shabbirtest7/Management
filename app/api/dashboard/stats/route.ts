@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { requireAuth } from '@/lib/auth';
-import { Priority } from '@prisma/client';
+import { Priority } from '@/lib/generated/prisma/enums';
+
 
 type ProjectsByPriorityItem = {
   priority: Priority;
