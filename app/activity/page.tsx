@@ -54,7 +54,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
         ...(timeRange !== 'ALL' && { days: timeRange })
       });
 
-      const res = await fetch(`${baseUrl}/api/activities?${params}`, {
+      const res = await fetch(`${baseUrl/api/activities?${params}`, {
         credentials: 'include'
       });
       if (!res.ok) {

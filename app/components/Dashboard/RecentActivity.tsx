@@ -20,14 +20,14 @@ interface Activity {
 const RecentActivity = () => {
   const [activities, setActivities] = useState<Activity[]>([])
   const [loading, setLoading] = useState(true)
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   useEffect(() => {
     fetchActivities()
   }, [])
 
   const fetchActivities = async () => {
     try {
-      const res = await fetch(`${baseUrl}/api/activities?limit=10`)
+      const res = await fetch('/api/activities?limit=10')
       const data = await res.json()
       setActivities(data.activities)
     } catch (error) {
@@ -76,10 +76,10 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
       <h3 className="text-lg font-medium text-gray-900 mb-4">Recent Activity</h3>
       <div className="flow-root">
         <ul className="-mb-8">
-          {activities?.map((activity, idx) => (
+          {activities.map((activity, idx) => (
             <li key={activity.id}>
               <div className="relative pb-8">
-                {idx !== activities?.length - 1 && (
+                {idx !== activities.length - 1 && (
                   <span
                     className="absolute top-5 left-5 -ml-px h-full w-0.5 bg-gray-200"
                     aria-hidden="true"

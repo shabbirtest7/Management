@@ -807,10 +807,10 @@ export default function ProjectDetailsPage() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showAllActivities, setShowAllActivities] = useState(false);
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   const fetchProject = async () => {
     try {
-      const res = await fetch(`${baseUrl}/api/projects/${id}`, {
+      const res = await fetch(`/api/projects/${id}`, {
         credentials: 'include'
       });
 
@@ -827,6 +827,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
         }
         throw new Error('Failed to fetch project');
       }
+
       const data = await res.json();
       setProject(data.project);
     } catch (error) {
@@ -845,7 +846,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   const handleDelete = async () => {
     try {
-      const res = await fetch(`${baseUrl}/api/projects/${id}`, {
+      const res = await fetch(`/api/projects/${id}`, {
         method: 'DELETE',
         credentials: 'include'
       });
@@ -867,7 +868,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   const handleStatusUpdate = async (newStatus: string) => {
     try {
-      const res = await fetch(`${baseUrl}/api/projects/${id}`, {
+      const res = await fetch(`/api/projects/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus }),
@@ -891,7 +892,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     if (!user) return;
     
     try {
-      const res = await fetch(`${baseUrl}/api/projects/${id}`, {
+      const res = await fetch(`/api/projects/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ assignedToId: user.id }),

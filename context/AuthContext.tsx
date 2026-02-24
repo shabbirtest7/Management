@@ -25,10 +25,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   const fetchUser = async () => {
     try {
-      const res = await fetch(`${baseUrl}/api/me`);
+      const res = await fetch('/api/me');
       if (res.ok) {
         const data = await res.json();
         setUser(data.user);
@@ -48,7 +48,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   const login = async (email: string, password: string) => {
     try {
-      const res = await fetch(`${baseUrl}/api/login`, {
+      const res = await fetch('/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -71,7 +71,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   const logout = async () => {
     try {
-      await fetch(`${baseUrl}/api/logout`, { method: 'POST' });
+      await fetch('/api/logout', { method: 'POST' });
       setUser(null);
       toast.success('Logged out successfully');
       router.push('/login');

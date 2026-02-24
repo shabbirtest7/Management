@@ -41,10 +41,10 @@ export default function DashboardPage() {
       fetchDashboardData();
     }
   }, [user]);
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   const fetchDashboardData = async () => {
     try {
-      const res = await fetch(`${baseUrl}/api/projects?limit=1000`, {
+      const res = await fetch('/api/projects?limit=1000', {
         credentials: 'include',
       });
       

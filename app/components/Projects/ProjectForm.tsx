@@ -22,15 +22,15 @@ const ProjectForm = ({ project, onClose, onSuccess }: ProjectFormProps) => {
     dueDate: project?.dueDate ? new Date(project.dueDate).toISOString().split('T')[0] : '',
     assignedToId: project?.assignedToId || ''
   })
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
 
     try {
       const url = project 
-        ? `${baseUrl}/api/projects/${project.id}`
-        : `${baseUrl}/api/projects`
+        ? `/api/projects/${project.id}`
+        : '/api/projects'
       
       const method = project ? 'PUT' : 'POST'
 
