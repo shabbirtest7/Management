@@ -45,7 +45,7 @@ export default function ActivityPage() {
   const [refreshing, setRefreshing] = useState(false);
   const [filter, setFilter] = useState('ALL');
   const [timeRange, setTimeRange] = useState('7');
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   const fetchActivities = async () => {
     try {
       const params = new URLSearchParams({
@@ -54,7 +54,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
         ...(timeRange !== 'ALL' && { days: timeRange })
       });
 
-      const res = await fetch(`${baseUrl/api/activities?${params}`, {
+      const res = await fetch(`/api/activities?${params}`, {
         credentials: 'include'
       });
       if (!res.ok) {
