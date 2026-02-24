@@ -38,13 +38,13 @@ export default function ProfilePage() {
     newPassword: '',
     confirmPassword: ''
   });
-
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const handleProfileUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const res = await fetch(`/api/users/${user?.id}`, {
+      const res = await fetch(`${baseUrl}/api/users/${user?.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -83,7 +83,7 @@ export default function ProfilePage() {
     setLoading(true);
 
     try {
-      const res = await fetch(`/api/users/${user?.id}/password`, {
+      const res = await fetch(`${baseUrl}/api/users/${user?.id}/password`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

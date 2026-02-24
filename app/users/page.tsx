@@ -52,7 +52,7 @@ export default function UsersPage() {
       toast.error('Access denied. Admin only.');
     }
   }, [currentUser, router]);
-
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [showUserModal, setShowUserModal] = useState(false);
@@ -68,7 +68,7 @@ export default function UsersPage() {
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch('/api/users', {
+      const res = await fetch(`${baseUrl}/api/users`, {
         credentials: 'include'
       });
 
@@ -105,8 +105,8 @@ export default function UsersPage() {
 
     try {
       const url = selectedUser 
-        ? `/api/users/${selectedUser.id}`
-        : '/api/users';
+        ? `${baseUrl}/api/users/${selectedUser.id}`
+        : `${baseUrl}/api/users`;
       
       const method = selectedUser ? 'PUT' : 'POST';
 
@@ -143,7 +143,7 @@ export default function UsersPage() {
     if (!selectedUser) return;
 
     try {
-      const res = await fetch(`/api/users/${selectedUser.id}`, {
+      const res = await fetch(`${baseUrl}/api/users/${selectedUser.id}`, {
         method: 'DELETE',
         credentials: 'include'
       });
@@ -166,7 +166,7 @@ export default function UsersPage() {
 
   const toggleUserStatus = async (userId: string, currentStatus: boolean) => {
     try {
-      const res = await fetch(`/api/users/${userId}`, {
+      const res = await fetch(`${baseUrl}/api/users/${userId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ isActive: !currentStatus }),

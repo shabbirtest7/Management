@@ -807,10 +807,10 @@ export default function ProjectDetailsPage() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showAllActivities, setShowAllActivities] = useState(false);
-
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const fetchProject = async () => {
     try {
-      const res = await fetch(`/api/projects/${id}`, {
+      const res = await fetch(`${baseUrl}/api/projects/${id}`, {
         credentials: 'include'
       });
 
@@ -846,7 +846,7 @@ export default function ProjectDetailsPage() {
 
   const handleDelete = async () => {
     try {
-      const res = await fetch(`/api/projects/${id}`, {
+      const res = await fetch(`${baseUrl}/api/projects/${id}`, {
         method: 'DELETE',
         credentials: 'include'
       });
@@ -868,7 +868,7 @@ export default function ProjectDetailsPage() {
 
   const handleStatusUpdate = async (newStatus: string) => {
     try {
-      const res = await fetch(`/api/projects/${id}`, {
+      const res = await fetch(`${baseUrl}/api/projects/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus }),
@@ -892,7 +892,7 @@ export default function ProjectDetailsPage() {
     if (!user) return;
     
     try {
-      const res = await fetch(`/api/projects/${id}`, {
+      const res = await fetch(`${baseUrl}/api/projects/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ assignedToId: user.id }),

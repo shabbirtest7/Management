@@ -20,14 +20,14 @@ interface Activity {
 const RecentActivity = () => {
   const [activities, setActivities] = useState<Activity[]>([])
   const [loading, setLoading] = useState(true)
-
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   useEffect(() => {
     fetchActivities()
   }, [])
 
   const fetchActivities = async () => {
     try {
-      const res = await fetch('/api/activities?limit=10')
+      const res = await fetch(`${baseUrl}/api/activities?limit=10`)
       const data = await res.json()
       setActivities(data.activities)
     } catch (error) {

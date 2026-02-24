@@ -31,7 +31,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
   const [unreadCount, setUnreadCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
-
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const fetchNotifications = async () => {
     if (!user) {
       setNotifications([]);
@@ -41,7 +41,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     }
 
     try {
-      const res = await fetch('/api/notifications?limit=50', {
+      const res = await fetch(`${baseUrl}/api/notifications?limit=50`, {
         credentials: 'include'
       });
 
@@ -71,7 +71,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 
   const markAsRead = async (notificationId: string) => {
     try {
-      const res = await fetch(`/api/notifications/${notificationId}`, {
+      const res = await fetch(`${baseUrl}/api/notifications/${notificationId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ isRead: true }),
@@ -93,7 +93,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 
   const markAllAsRead = async () => {
     try {
-      const res = await fetch('/api/notifications/mark-read', {
+      const res = await fetch(`${baseUrl}/api/notifications/mark-read`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ all: true }),
@@ -114,7 +114,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 
   const deleteNotification = async (notificationId: string) => {
     try {
-      const res = await fetch(`/api/notifications/${notificationId}`, {
+      const res = await fetch(`${baseUrl}/api/notifications/${notificationId}`, {
         method: 'DELETE',
         credentials: 'include'
       });

@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { requireAuth } from '@/lib/auth';
 
-// GET /api/notifications - Get user notifications
 export async function GET(request: NextRequest) {
   try {
     const user = await requireAuth(request);
@@ -54,7 +53,6 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// POST /api/notifications/mark-read - Mark notifications as read
 export async function POST(request: NextRequest) {
   try {
     const user = await requireAuth(request);

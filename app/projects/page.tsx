@@ -86,7 +86,7 @@ export default function ProjectsPage() {
         ...(priorityFilter && { priority: priorityFilter }),
       });
 
-      const res = await fetch(`/api/projects?${params}`);
+      const res = await fetch(`${baseUrl}/api/projects?${params}`);
       const data = await res.json();
       setProjects(data.projects);
       setPagination(data.pagination);
@@ -98,11 +98,11 @@ export default function ProjectsPage() {
   };
 
 
-  
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   const handleDelete = async (projectId: string) => {
     try {
-      const res = await fetch(`/api/projects/${projectId}`, {
+      const res = await fetch(`${baseUrl}/api/projects/${projectId}`, {
         method: "DELETE",
       });
 
