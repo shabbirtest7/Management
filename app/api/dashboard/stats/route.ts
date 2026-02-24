@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { requireAuth } from '@/lib/auth';
+import { Priority } from '@prisma/client';
+
+type ProjectsByPriorityItem = {
+  priority: Priority;
+  _count: number;
+};
 
 export async function GET(request: NextRequest) {
   try {
@@ -137,9 +143,9 @@ export async function GET(request: NextRequest) {
       CRITICAL: 0
     };
     
-    projectsByPriority.forEach(item => {
-      priorityDistribution[item.priority as keyof typeof priorityDistribution] = item._count;
-    });
+ projectsByPriority.forEach((item: ProjectsByPriorityItem) => {
+  priorityDistribution[item.priority] = item._count;
+});
 
     return NextResponse.json({
       projects: {
