@@ -76,10 +76,10 @@ const RecentActivity = () => {
       <h3 className="text-lg font-medium text-gray-900 mb-4">Recent Activity</h3>
       <div className="flow-root">
         <ul className="-mb-8">
-          {activities.map((activity, idx) => (
+          {activities?.map((activity, idx) => (
             <li key={activity.id}>
               <div className="relative pb-8">
-                {idx !== activities.length - 1 && (
+                {idx !== activities?.length - 1 && (
                   <span
                     className="absolute top-5 left-5 -ml-px h-full w-0.5 bg-gray-200"
                     aria-hidden="true"

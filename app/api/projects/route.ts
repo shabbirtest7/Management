@@ -1,6 +1,8 @@
   import { NextRequest, NextResponse } from 'next/server';
   import { requireAuth, requireAdmin } from '@/lib/auth';
   import { prisma } from '@/lib/prisma';
+import { notifyProjectCreated, notifyActivityCreated } from '@/lib/notifications';
+
 
   export async function GET(request: NextRequest) {
     try {
@@ -109,7 +111,7 @@
       });
 
       // Create activity log
-      await prisma.activity.create({
+      const activity = await prisma.activity.create({
         data: {
           action: 'CREATE',
           details: `Created project: ${name}`,
@@ -118,7 +120,12 @@
         }
       });
 
-      return NextResponse.json(project);
+    await notifyProjectCreated(project, user);
+    await notifyActivityCreated(activity, project, user);
+
+    return NextResponse.json(project);
+
+      // return NextResponse.json(project);
     } catch (error: any) {
       if (error.message === 'Unauthorized') {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -130,3 +137,4 @@
       );
     }
   }
+

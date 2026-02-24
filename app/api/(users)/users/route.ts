@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { requireAdmin } from '@/lib/auth';
 import bcrypt from 'bcryptjs';
+import { notifyUserCreated } from '@/lib/notifications';
 
 export async function GET(request: NextRequest) {
   try {
@@ -130,6 +131,10 @@ export async function POST(request: NextRequest) {
         userId: admin.id
       }
     });
+
+      await notifyUserCreated(user, admin);
+
+   
 
     return NextResponse.json({
       message: 'User created successfully',

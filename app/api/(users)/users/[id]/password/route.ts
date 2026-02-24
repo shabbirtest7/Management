@@ -5,11 +5,13 @@ import bcrypt from 'bcryptjs';
 
 export async function PUT(
   request: NextRequest,
-   { params }: { params: { params: Promise<{ id: string }> } }
+  //  { params }: { params: { params: Promise<{ id: string }> } }
+  //  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const currentUser = await requireAuth(request);
-const { id: userId }:any = await params;
+const { id: userId } = await params;
     // Users can only change their own password
     if (currentUser.id !== userId) {
       return NextResponse.json(

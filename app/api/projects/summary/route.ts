@@ -127,7 +127,7 @@ export async function GET(request: NextRequest) {
         count: item._count
       })),
       statusChanges: statusChanges.map(item => ({
-        date: item.createdAt.toISOString().split('T')[0],
+        date: item.createdAt?.toISOString().split('T')[0],
         action: item.action,
         project: item.project?.name
       })),

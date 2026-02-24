@@ -9,7 +9,9 @@ interface AllActivitiesModalProps {
   isOpen: boolean;
   onClose: () => void;
   activities: Activity[];
+ 
 }
+
 
 export default function AllActivitiesModal({
   isOpen,
@@ -41,7 +43,7 @@ export default function AllActivitiesModal({
       isOpen={isOpen}
       onClose={onClose}
       title="All Activities"
-      size="lg"
+      
     >
       <div className="space-y-4 max-h-96 overflow-y-auto">
         {activities && activities.length > 0 ? (

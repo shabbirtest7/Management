@@ -71,7 +71,8 @@ const baseInputClasses = `
     }
     ${Icon && iconPosition === 'left' ? 'pl-10' : ''}
     ${(Icon && iconPosition === 'right') || isPassword ? 'pr-10' : ''}
-    ${props.type === 'date' ? 'py-2' : 'py-2.5'}
+    ${type === 'date' ? 'py-2' : 'py-2.5'}
+
   `;
 
   // Size variants

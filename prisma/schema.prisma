@@ -20,6 +20,7 @@ model User {
   createdProjects  Project[] @relation("Creator")
   assignedProjects Project[] @relation("Assignee")
   activities       Activity[]
+  notifications Notification[]
 }
 
 model Project {
@@ -38,6 +39,7 @@ model Project {
   createdBy     User     @relation("Creator", fields: [createdById], references: [id])
   assignedTo    User?    @relation("Assignee", fields: [assignedToId], references: [id])
   activities    Activity[]
+  notifications Notification[]
 }
 
 model Activity {
@@ -52,6 +54,30 @@ model Activity {
   user      User     @relation(fields: [userId], references: [id])
   project   Project? @relation(fields: [projectId], references: [id])
 }
+
+model Notification {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  type       NotificationType
+  title      String
+  message    String
+  data       Json?     
+  isRead     Boolean   @default(false)
+  isArchived Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+  readAt     DateTime?
+  
+  projectId String?  @db.ObjectId   // or String without ? if required
+  project   Project? @relation(fields: [projectId], references: [id])
+
+  userId     String    @db.ObjectId
+  user       User      @relation(fields: [userId], references: [id])
+  @@index([userId, createdAt])
+  @@index([userId, isRead])
+}
+
+
+
+
 
 enum Role {
   ADMIN
@@ -70,4 +96,23 @@ enum Priority {
   MEDIUM
   HIGH
   CRITICAL
+}
+
+
+enum NotificationType {
+  USER_CREATED
+  USER_UPDATED
+  USER_DELETED
+  USER_STATUS_CHANGED
+  PROJECT_CREATED
+  PROJECT_UPDATED
+  PROJECT_DELETED
+  PROJECT_ASSIGNED
+  PROJECT_COMPLETED
+  STATUS_CHANGED
+  PRIORITY_CHANGED
+  DUE_DATE_APPROACHING
+  DUE_DATE_OVERDUE
+  ACTIVITY_CREATED
+  SYSTEM_ALERT
 }
