@@ -88,7 +88,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       activities,
-      stats: stats.reduce((acc: any, curr) => {
+      stats: stats.reduce((acc: any, curr:any) => {
         acc[curr.action] = curr._count;
         return acc;
       }, {})
